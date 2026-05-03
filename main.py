@@ -5,8 +5,8 @@ window=display.set_mode((widht,height))
 display.set_caption('Шутер')
 background = transform.scale(image.load('футболл (1).png'),(widht,height))
 
-speed_x=0
-speed_y=0
+speed_x=10
+speed_y=10
 clock = time.Clock()
 FPS=60
 Finish= False
@@ -39,8 +39,8 @@ class Player(GameSprite):
             self.rect.y += self.speed
 
 
-Raketka1 = Player('Raketka2.png', 20, 100, 68, 435, 1)
-Raketka2=Player('Raketka2.png',300,20,570,435,1)
+Raketka1 = Player('Raketka2.png', 20, 100, 68, 435, 10)
+Raketka2=Player('Raketka2.png',300,20,570,435,10)
 Mach=GameSprite('Tennis1.png', 20, 100, 317, 214, 1)
 
 while game:
@@ -48,12 +48,20 @@ while game:
     for i in event.get():
         if i.type == QUIT:
             game = False
-    Raketka1.reset()
-    Raketka1.update_l()
-    Raketka2.reset()
-    Raketka2.update_r()
-    Mach.reset()
+    if Finish != True:
+        Raketka1.reset()
+        Raketka1.update_l()
+        Raketka2.reset()
+        Raketka2.update_r()
+        Mach.reset()
+        Mach.rect.x += speed_x
+        Mach.rect.y += speed_y
+        if Mach.rect.y > 450 or Mach.rect.y <0:
+            speed_y *= -1
+        if sprite.collide_rect(Raketka1,Mach) or sprite.collide_rect(Raketka2,Mach):
+            speed_x *= -1
 
 
 
     display.update()
+    clock.tick(FPS)
