@@ -11,6 +11,12 @@ clock = time.Clock()
 FPS=60
 Finish= False
 game= True
+font.init()
+font1= font.Font(None,35)
+lose1=font1.render('ЧЁРНЫЕ ПРОИГРАЛИ!!!!',True,(180,0,0))
+font2= font.Font(None,35)
+lose2=font2.render('БЕЛЫЕ ПРОИГРАЛИ!!!!',True,(180,0,0))
+
 class GameSprite(sprite.Sprite):
     def __init__(self,player_image,player_x,player_y,size_x,size_y,player_speed):
         super().__init__()
@@ -60,6 +66,12 @@ while game:
             speed_y *= -1
         if sprite.collide_rect(Raketka1,Mach) or sprite.collide_rect(Raketka2,Mach):
             speed_x *= -1
+        if Mach.rect.x< 0:
+            finish = True
+            window.blit(lose1,(200,200))
+        if Mach.rect.x > 700:
+            finish = True
+            window.blit(lose2, (200, 200))
 
 
 
